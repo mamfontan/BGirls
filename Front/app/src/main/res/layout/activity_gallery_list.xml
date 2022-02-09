@@ -7,6 +7,15 @@
     android:background="@drawable/background01"
     tools:context=".GalleryListActivity">
 
+    <ImageView
+        android:id="@+id/mainImage"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/test001"
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/lblGalleryList"
         android:layout_width="wrap_content"
@@ -22,19 +31,12 @@
         app:layout_constraintVertical_bias="0.01" />
 
     <ImageView
-        android:id="@+id/mainImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblGalleryList"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <ImageView
         android:id="@+id/imgInformation"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/contentDescriptionInformation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/information" />
@@ -45,6 +47,7 @@
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="60dp"
+        android:contentDescription="@string/contentDescriptionDownload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/download" />
@@ -55,8 +58,77 @@
         android:layout_height="35dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="104dp"
+        android:contentDescription="@string/contentDescriptionShare"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sharing" />
+
+    <!-- Footer Buttons -->
+
+    <ImageView
+        android:id="@+id/imgThumb01"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="628dp"
+        android:layout_marginEnd="332dp"
+        android:contentDescription="@string/contentDescriptionShare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test002" />
+
+    <ImageView
+        android:id="@+id/imgThumb02"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="628dp"
+        android:layout_marginEnd="268dp"
+        android:contentDescription="@string/contentDescriptionShare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test002" />
+
+    <ImageView
+        android:id="@+id/imgThumb03"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="628dp"
+        android:layout_marginEnd="204dp"
+        android:contentDescription="@string/contentDescriptionShare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test002" />
+
+    <ImageView
+        android:id="@+id/imgThumb04"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="628dp"
+        android:layout_marginEnd="140dp"
+        android:contentDescription="@string/contentDescriptionShare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test002" />
+
+    <ImageView
+        android:id="@+id/imgThumb05"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="628dp"
+        android:layout_marginEnd="80dp"
+        android:contentDescription="@string/contentDescriptionShare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test002" />
+
+    <ImageView
+        android:id="@+id/imgThumb06"
+        android:layout_width="63dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="628dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/contentDescriptionShare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test002" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

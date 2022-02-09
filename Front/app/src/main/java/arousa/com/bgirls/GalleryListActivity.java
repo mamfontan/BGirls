@@ -47,5 +47,52 @@ public class GalleryListActivity extends AppCompatActivity {
                 Toast.makeText(GalleryListActivity.this, "Not available yet", Toast.LENGTH_LONG).show();
             }
         });
+
+        HookGalleryButtons();
+    }
+
+    private void HookGalleryButtons()
+    {
+        ImageView imgThumb01 = (ImageView) findViewById(R.id.imgThumb01);
+        imgThumb01.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(GalleryListActivity.this, "Calling to gallery 01", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView imgThumb02 = (ImageView) findViewById(R.id.imgThumb02);
+        imgThumb02.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(GalleryListActivity.this, "Calling to gallery 02", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView imgThumb03 = (ImageView) findViewById(R.id.imgThumb03);
+        imgThumb03.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(GalleryListActivity.this, "Calling to gallery 03", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView imgThumb04 = (ImageView) findViewById(R.id.imgThumb04);
+        imgThumb04.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(GalleryListActivity.this, "Calling to gallery 04", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView imgThumb05 = (ImageView) findViewById(R.id.imgThumb05);
+        imgThumb05.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(GalleryListActivity.this, "Calling to gallery 05", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ImageView imgThumb06 = (ImageView) findViewById(R.id.imgThumb06);
+        imgThumb06.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(GalleryListActivity.this, "Calling to gallery 06", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
