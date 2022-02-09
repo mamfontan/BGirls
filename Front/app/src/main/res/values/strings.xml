@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BGirls</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Login activity -->
+    <string name="lblAppTitle">Beauty Girls</string>
+    <string name="lblCheckStatus">Connecting to server</string>
+
+    <!-- GalleryList -->
+    <string name="lblGalleryList">GALLERIES</string>
+    <string name="title_activity_gallery_list">Gallery List</string>
+    <string name="title_activity_about">About</string>
+
+    <!-- About -->
+    <string name="lblAboutTitle">About</string>
+    <string name="btnBack">Back</string>
+
+</resources>
