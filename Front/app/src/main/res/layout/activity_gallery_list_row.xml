@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <ImageView
+        android:id="@+id/imgGallery"
+        android:layout_width="56dp"
+        android:layout_height="68dp"
+        app:srcCompat="@drawable/question" />
+
+    <TextView
+        android:id="@+id/galleryName"
+        android:textColor="@color/white"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="118dp"
+        android:text="Gallery name"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/galleryPics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="242dp"
+        android:text="Num pics:"
+        android:textSize="13dp"
+        android:textColor="@color/white"
+        android:typeface="sans" />
+
+
+    <TextView
+        android:id="@+id/galleryPicsValue"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="200dp"
+        android:text="12"
+        android:textSize="13dp"
+        android:typeface="sans" />
+
+
+</RelativeLayout>
