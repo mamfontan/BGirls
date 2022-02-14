@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
         <activity
-            android:name=".GalleryList2Activity"
+            android:name=".GalleryListActivity"
             android:exported="false"
-            android:label="@string/title_activity_gallery_list2"
+            android:label="@string/title_activity_gallery_list"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".AboutActivity"

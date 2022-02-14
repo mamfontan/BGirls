@@ -5,8 +5,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -32,7 +34,19 @@ public class GalleryListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_list);
 
-        GetGalleryList();
+        HookButtonEvents();
+        //GetGalleryList();
+    }
+
+    private void HookButtonEvents()
+    {
+        ImageView imgMenu = (ImageView) findViewById(R.id.imgMenu);
+        imgMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO
+            }
+        });
     }
 
     private void GetGalleryList()
@@ -56,7 +70,6 @@ public class GalleryListActivity extends AppCompatActivity {
             Integer result = 0;
             try
             {
-                //HttpsURLConnection myConnection = (HttpsURLConnection) urls[0].openConnection();
                 HttpURLConnection myConnection = (HttpURLConnection) urls[0].openConnection();
                 myConnection.setRequestMethod("GET");
 
@@ -97,9 +110,6 @@ public class GalleryListActivity extends AppCompatActivity {
             String line;
             try {
                 sb.append(reader.readLine());
-                //while ((line = reader.readLine()) != null) {
-                //    sb.append(line).append('\n');
-                //}
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
