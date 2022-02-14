@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class GalleryListActivity extends AppCompatActivity {
+
+    private float x1, x2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,4 +100,5 @@ public class GalleryListActivity extends AppCompatActivity {
             }
         });
     }
+
 }

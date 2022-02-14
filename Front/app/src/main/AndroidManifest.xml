@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
         <activity
+            android:name=".GalleryList2Activity"
+            android:exported="false"
+            android:label="@string/title_activity_gallery_list2"
+            android:theme="@style/NoActionBar" />
+        <activity
             android:name=".AboutActivity"
             android:exported="false"
             android:label="@string/title_activity_about"
@@ -23,9 +28,9 @@
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:noHistory = "true"
             android:exported="true"
             android:label="@string/title_activity_login"
+            android:noHistory="true"
             android:theme="@style/Theme.BGirls.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
