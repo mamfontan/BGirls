@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void NavigateToGalleryList()
     {
-        Intent i = new Intent(LoginActivity.this, GalleryList2Activity.class);
+        Intent i = new Intent(LoginActivity.this, GalleryListActivity.class);
         startActivity(i);
     }
 

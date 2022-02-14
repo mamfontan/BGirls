@@ -3,19 +3,10 @@ package arousa.com.bgirls;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -27,10 +18,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import arousa.com.bgirls.databinding.ActivityGalleryList2Binding;
 import arousa.com.bgirls.model.Gallery;
 
-public class GalleryList2Activity extends AppCompatActivity {
+public class GalleryListActivity extends AppCompatActivity {
 
     public List<Gallery> galleryList = new ArrayList<>();
 
@@ -40,7 +30,7 @@ public class GalleryList2Activity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallery_list2);
+        setContentView(R.layout.activity_gallery_list);
 
         GetGalleryList();
     }
