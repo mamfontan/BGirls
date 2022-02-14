@@ -22,11 +22,6 @@
             android:label="@string/title_activity_about"
             android:theme="@style/NoActionBar" />
         <activity
-            android:name=".GalleryListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_gallery_list"
-            android:theme="@style/NoActionBar" />
-        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"

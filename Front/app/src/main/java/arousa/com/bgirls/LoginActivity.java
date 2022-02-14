@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             Integer result = 0;
             try
             {
-                //HttpsURLConnection myConnection = (HttpsURLConnection) urls[0].openConnection();
                 HttpURLConnection myConnection = (HttpURLConnection) urls[0].openConnection();
                 myConnection.setRequestMethod("GET");
 
@@ -107,9 +106,6 @@ public class LoginActivity extends AppCompatActivity {
             String line;
             try {
                 sb.append(reader.readLine());
-                //while ((line = reader.readLine()) != null) {
-                //    sb.append(line).append('\n');
-                //}
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
