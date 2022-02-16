@@ -51,14 +51,20 @@ public class GalleryListActivity extends AppCompatActivity {
         Gallery g2 = new Gallery();
         g2.setMainPic("https://gals.kindgirls.com/d009/delfina_26_00498/delfina_26_00498_3.jpg");
         g2.setName("Delfine");
-        g1.setNumPics(15);
+        g2.setNumPics(15);
         galleryList.add(g2);
 
         Gallery g3 = new Gallery();
         g3.setMainPic("https://gals.kindgirls.com/d009/sailor_21_38858/sailor_21_38858_3.jpg");
         g3.setName("Sailor");
-        g1.setNumPics(13);
+        g3.setNumPics(13);
         galleryList.add(g3);
+
+        Gallery g4 = new Gallery();
+        g4.setMainPic("https://gals.kindgirls.com/d009/polina_pafio_38755/polina_pafio_38755_6.jpg");
+        g4.setName("Polina Pafio");
+        g4.setNumPics(15);
+        galleryList.add(g4);
 
         ListView list = (ListView) findViewById(R.id.galleryList);
         list.setAdapter(new GalleryListAdapter(this, galleryList));
