@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background01"
+    android:background="@drawable/background02"
     tools:context=".AboutActivity">
 
     <ScrollView
@@ -18,7 +18,7 @@
             android:id="@+id/aboutText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/lblCheckStatus" />
+            android:text="@string/lblCheckStatus01" />
 
     </ScrollView>
 

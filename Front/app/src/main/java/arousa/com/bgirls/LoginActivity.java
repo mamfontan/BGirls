@@ -16,10 +16,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
+
+import arousa.com.bgirls.database.DbHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
+    TextView lblStatus;
     int serverConnectionStatus = 0;
+    String idUser = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        lblStatus = (TextView) findViewById(R.id.lblCheckStatus);
 
         CheckConnectionToServer();
     }
@@ -40,8 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void SetErrorMessage()
     {
-        TextView imgInformation = (TextView) findViewById(R.id.lblCheckStatus);
-        imgInformation.setText(R.string.connectionError);
+        lblStatus.setText(R.string.connectionError);
     }
 
     private void CheckConnectionToServer() {
@@ -55,8 +61,31 @@ public class LoginActivity extends AppCompatActivity {
         }
         catch (Exception error)
         {
-            TextView imgInformation = (TextView) findViewById(R.id.lblCheckStatus);
-            imgInformation.setText(error.getMessage());
+            lblStatus.setText(error.getMessage());
+        }
+    }
+
+    private void SendLoginToServer()
+    {
+        String url = Constants.ApiUrl + "login.php";
+
+        lblStatus.setText(R.string.lblCheckStatus02);
+
+        try {
+            DbHelper dbHelper = new DbHelper(this);
+            idUser = dbHelper.getIdentification();
+            if (idUser == "") {
+                UUID uuid = UUID.randomUUID();
+                idUser = uuid.toString();
+                dbHelper.insertIdentification(idUser);
+
+                // TODO Enviar el login al server
+            }
+            NavigateToGalleryList();
+        }
+        catch (Exception error)
+        {
+            lblStatus.setText(error.getMessage());
         }
     }
 
@@ -93,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Integer result) {
             // Call activity method with results
             if (result == 0) {
-                NavigateToGalleryList();
+                SendLoginToServer();
             } else {
                 SetErrorMessage();
             }
@@ -117,6 +146,39 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             return sb.toString();
+        }
+    }
+
+    private class MarkLogin extends AsyncTask<URL, Void, Integer>
+    {
+
+        @Override
+        protected Integer doInBackground(URL... urls) {
+            Integer result = 0;
+            try
+            {
+                HttpURLConnection myConnection = (HttpURLConnection) urls[0].openConnection();
+                myConnection.setRequestMethod("POST");
+
+                if (myConnection.getResponseCode() == 200) {
+                    myConnection.disconnect();
+                }
+            }
+            catch (Exception error) {
+                result = -1;
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            // Call activity method with results
+            if (result == 0) {
+                NavigateToGalleryList();
+            } else {
+                SetErrorMessage();
+            }
         }
     }
 }
