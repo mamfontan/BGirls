@@ -72,16 +72,18 @@ public class LoginActivity extends AppCompatActivity {
         lblStatus.setText(R.string.lblCheckStatus02);
 
         try {
-            DbHelper dbHelper = new DbHelper(this);
+            DbHelper dbHelper = new DbHelper(LoginActivity.this);
             idUser = dbHelper.getIdentification();
             if (idUser == "") {
                 UUID uuid = UUID.randomUUID();
                 idUser = uuid.toString();
                 dbHelper.insertIdentification(idUser);
-
-                // TODO Enviar el login al server
             }
-            NavigateToGalleryList();
+
+            url += "?device=" + idUser;
+            URL endPoint = new URL(url);
+            MarkLogin cConnection = new MarkLogin();
+            cConnection.execute(endPoint);
         }
         catch (Exception error)
         {

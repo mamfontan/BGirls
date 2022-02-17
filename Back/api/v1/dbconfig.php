@@ -1,9 +1,15 @@
 <?php
     // Developement configuration
     define('dbHost', 'localhost');
-    define('dbName', 'kindgirls');
-    define('dbUser', 'kguser');
-    define('dbPass', 'lBAy3R07Zfrc0ut7');
+    define('dbName', 'id18175334_ggalleries');
+    define('dbUser', 'id18175334_ggalleries_user');
+    define('dbPass', 'l#o0{JjQ1R=/f_zG');    
+
+    // Production configuration
+    // define('dbHost', 'localhost');
+    // define('dbName', 'id18175334_ggalleries');
+    // define('dbUser', 'id18175334_ggalleries_user');
+    // define('dbPass', 'l#o0{JjQ1R=/f_zG');    
 
     function countTableElements($tableName)
     {
