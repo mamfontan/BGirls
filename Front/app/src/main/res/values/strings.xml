@@ -16,6 +16,7 @@
     <string name="contentDescriptionDownload">About</string>
     <string name="contentDescriptionInformation">About</string>
     <string name="lblNoData">Server has not returned data</string>
+    <string name="lblNumPics">Num. pics: </string>
 
     <!-- About -->
     <string name="lblAboutTitle">About</string>

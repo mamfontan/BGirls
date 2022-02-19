@@ -1,10 +1,11 @@
 package arousa.com.bgirls.adapters;
 
+import static android.provider.Settings.System.getString;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,32 +46,30 @@ public class GalleryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        Log.i("getView", "Llegamos a getView");
         ViewHolder holder;
         if (view == null) {
             view = layoutInflater.inflate(R.layout.activity_gallery_list_row, null);
             holder = new ViewHolder();
-            holder.galleryImage = (ImageView) view.findViewById(R.id.imgGallery);
-            holder.galleryName = (TextView) view.findViewById(R.id.galleryName);
-            holder.galleryPicsValue = (TextView) view.findViewById(R.id.galleryPicsValue);
+            holder.galleryImage = view.findViewById(R.id.imgGallery);
+            holder.galleryName = view.findViewById(R.id.galleryName);
+            holder.galleryPics = view.findViewById(R.id.galleryPics);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        //new DownloadImageFromInternet(holder.galleryImage).execute("https://gals.kindgirls.com/d009/lana_lane_24_09964/lana_lane_24_09964_5.jpg");
         new DownloadImageFromInternet(holder.galleryImage).execute(listData.get(position).getMainPic());
         holder.galleryName.setText(listData.get(position).getName());
 
         Integer numPics = listData.get(position).getNumPics();
-        holder.galleryPicsValue.setText(numPics.toString());
+        holder.galleryPics.setText( "Num. pics: "  + numPics.toString());
         return view;
     }
 
     static class ViewHolder {
         ImageView galleryImage;
         TextView galleryName;
-        TextView galleryPicsValue;
+        TextView galleryPics;
     }
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {

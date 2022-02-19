@@ -20,16 +20,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import arousa.com.bgirls.adapters.GalleryListAdapter;
+import arousa.com.bgirls.database.DbHelper;
 import arousa.com.bgirls.model.Gallery;
 
 public class GalleryListActivity extends AppCompatActivity {
 
+    String idUser = "";
     public ArrayList<Gallery> galleryList = new ArrayList<Gallery>();
 
     @Override
@@ -39,6 +45,9 @@ public class GalleryListActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_list);
+
+        DbHelper dbHelper = new DbHelper(GalleryListActivity.this);
+        this.idUser = dbHelper.getIdentification();
 
         HookButtonEvents();
 
@@ -65,6 +74,12 @@ public class GalleryListActivity extends AppCompatActivity {
         g4.setName("Polina Pafio");
         g4.setNumPics(15);
         galleryList.add(g4);
+
+        Gallery g5 = new Gallery();
+        g5.setMainPic("https://gals.kindgirls.com/d009/isla_26_24847/isla_26_24847_5.jpg");
+        g5.setName("Isla");
+        g5.setNumPics(12);
+        galleryList.add(g5);
 
         ListView list = (ListView) findViewById(R.id.galleryList);
         list.setAdapter(new GalleryListAdapter(this, galleryList));
@@ -120,7 +135,24 @@ public class GalleryListActivity extends AppCompatActivity {
         }
     }
 
-    private class GetGalleries extends AsyncTask<URL, Void, Integer> {
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        String url = Constants.ApiUrl + "logout.php";
+
+        try {
+            URL endPoint = new URL(url);
+            GalleryListActivity.MarkLogout cConnection = new GalleryListActivity.MarkLogout();
+            cConnection.execute(endPoint);
+        }
+        catch (Exception error) {
+        }
+    }
+
+    private class GetGalleries extends AsyncTask<URL, Void, Integer>
+    {
         @Override
         protected Integer doInBackground(URL... urls) {
             Integer result = 0;
@@ -177,6 +209,54 @@ public class GalleryListActivity extends AppCompatActivity {
             }
 
             return sb.toString();
+        }
+    }
+
+    private class MarkLogout extends AsyncTask<URL, Void, Integer>
+    {
+        @Override
+        protected Integer doInBackground(URL... urls) {
+            Integer result = 0;
+            try
+            {
+                Map<String,Object> params = new LinkedHashMap<>();
+                params.put("device", idUser);
+
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String,Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+                HttpURLConnection myConnection = (HttpURLConnection) urls[0].openConnection();
+                myConnection.setRequestMethod("POST");
+                myConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                myConnection.setDoOutput(true);
+                myConnection.getOutputStream().write(postDataBytes);
+
+                Reader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream(), "UTF-8"));
+
+                StringBuilder sb = new StringBuilder();
+                for (int c; (c = in.read()) >= 0;)
+                    sb.append((char)c);
+                String response = sb.toString();
+
+                if (myConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    myConnection.disconnect();
+                }
+            }
+            catch (Exception error) {
+                result = -1;
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
         }
     }
 }

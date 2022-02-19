@@ -3,6 +3,8 @@ package arousa.com.bgirls;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -11,11 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import arousa.com.bgirls.database.DbHelper;
@@ -54,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         String url = Constants.ApiUrl + "check.php";
 
         try {
-
             URL endPoint = new URL(url);
             CheckConnection cConnection = new CheckConnection();
             cConnection.execute(endPoint);
@@ -80,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                 dbHelper.insertIdentification(idUser);
             }
 
-            url += "?device=" + idUser;
             URL endPoint = new URL(url);
             MarkLogin cConnection = new MarkLogin();
             cConnection.execute(endPoint);
@@ -134,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             StringBuilder sb = new StringBuilder();
 
-            String line;
             try {
                 sb.append(reader.readLine());
             } catch (IOException e) {
@@ -153,16 +158,37 @@ public class LoginActivity extends AppCompatActivity {
 
     private class MarkLogin extends AsyncTask<URL, Void, Integer>
     {
-
         @Override
         protected Integer doInBackground(URL... urls) {
             Integer result = 0;
             try
             {
+                Map<String,Object> params = new LinkedHashMap<>();
+                params.put("device", idUser);
+
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String,Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
                 HttpURLConnection myConnection = (HttpURLConnection) urls[0].openConnection();
                 myConnection.setRequestMethod("POST");
+                myConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                myConnection.setDoOutput(true);
+                myConnection.getOutputStream().write(postDataBytes);
 
-                if (myConnection.getResponseCode() == 200) {
+                Reader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream(), "UTF-8"));
+
+                StringBuilder sb = new StringBuilder();
+                for (int c; (c = in.read()) >= 0;)
+                    sb.append((char)c);
+                String response = sb.toString();
+
+                if (myConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     myConnection.disconnect();
                 }
             }
@@ -175,7 +201,6 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer result) {
-            // Call activity method with results
             if (result == 0) {
                 NavigateToGalleryList();
             } else {

@@ -18,41 +18,24 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="118dp"
+        android:layout_toRightOf="@+id/imgGallery"
+        android:layout_marginStart="20dp"
         android:text="Gallery name"
         android:textStyle="bold"
         android:typeface="sans" />
 
     <TextView
         android:id="@+id/galleryPics"
-        android:layout_width="103dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="31dp"
         android:layout_marginEnd="219dp"
         android:text="Num pics:"
+        android:layout_toRightOf="@+id/imgGallery"
         android:textColor="@color/white"
         android:textSize="13dp"
         android:typeface="sans" />
-
-
-    <TextView
-        android:id="@+id/galleryPicsValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="180dp"
-        android:text="12"
-        android:textColor="@color/white"
-        android:textSize="13dp"
-        android:typeface="sans" />
-
 
 </RelativeLayout>

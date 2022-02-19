@@ -77,7 +77,7 @@
 
     function insertLogin($device)
     {
-        insertDevice();
+        insertDevice($device);
 
         $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
 
@@ -86,7 +86,7 @@
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-		$query = "INSERT INTO logins (device, login) VALUES ($device, CURRENT_TIMESTAMP)";
+		$query = "INSERT INTO logins (device, login) VALUES ('" . $device . "', CURRENT_TIMESTAMP)";
 		$response = array();
 		$response = mysqli_query($link, $query);
 
@@ -104,8 +104,10 @@
         }
 
         try {
-            $query = "INSERT INTO devices (id) VALUES ($device)";
-            $response = mysqli_query($link, $query);        
+            $query = "INSERT INTO devices (id) VALUES ('" . $device . "')";
+            mysqli_query($link, $query);
+
+            $link->close();
         } catch (Exception $ex) { }        
     }
 
@@ -115,7 +117,7 @@
         global $device;
 
         if(isset($_POST['device'])) {
-            $year = $_REQUEST['device'];
+            $device = $_POST['device'];
         }
     }    
 ?>
