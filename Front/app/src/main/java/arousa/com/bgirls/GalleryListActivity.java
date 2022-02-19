@@ -1,5 +1,6 @@
 package arousa.com.bgirls;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -13,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -26,7 +26,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import arousa.com.bgirls.adapters.GalleryListAdapter;
@@ -86,17 +85,19 @@ public class GalleryListActivity extends AppCompatActivity {
         Log.i("onCreate", "Hemos establecido el adaptador");
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+        @Override
+        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = list.getItemAtPosition(position);
-                Gallery newsData = (Gallery) o;
-                Toast.makeText(GalleryListActivity.this, "Selected :" + " " + newsData, Toast.LENGTH_LONG).show();
+                Gallery selectedGallery = (Gallery) o;
+
+                Intent i = new Intent(GalleryListActivity.this, GalleryPicsActivity.class);
+                i.putExtra("gallery", selectedGallery);
+                    startActivity(i);
             }
         });
 
         ShowNoDataLabel(false);
-
-        //GetGalleryList();
+        GetGalleryList();
     }
 
     private void ShowNoDataLabel(boolean value)

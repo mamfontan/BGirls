@@ -53,6 +53,8 @@ public class GalleryListAdapter extends BaseAdapter {
             holder.galleryImage = view.findViewById(R.id.imgGallery);
             holder.galleryName = view.findViewById(R.id.galleryName);
             holder.galleryPics = view.findViewById(R.id.galleryPics);
+            holder.galleryViews = view.findViewById(R.id.galleryViews);
+            holder.galleryRating = view.findViewById(R.id.galleryRating);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -63,6 +65,13 @@ public class GalleryListAdapter extends BaseAdapter {
 
         Integer numPics = listData.get(position).getNumPics();
         holder.galleryPics.setText( "Num. pics: "  + numPics.toString());
+
+        Integer numViews = listData.get(position).getNumViews();
+        holder.galleryViews.setText("Views: " + numViews.toString());
+
+        float rating = listData.get(position).getRating();
+        holder.galleryRating.setText("Rating: " + rating);
+
         return view;
     }
 
@@ -70,6 +79,8 @@ public class GalleryListAdapter extends BaseAdapter {
         ImageView galleryImage;
         TextView galleryName;
         TextView galleryPics;
+        TextView galleryViews;
+        TextView galleryRating;
     }
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {

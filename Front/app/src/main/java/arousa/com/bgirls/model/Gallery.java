@@ -1,65 +1,70 @@
 package arousa.com.bgirls.model;
 
-public class Gallery
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
+public class Gallery implements Parcelable
 {
-    public int Year;
-
-    public int getYear() {
-        return Year;
+    protected Gallery(Parcel in) {
+        _name = in.readString();
+        _mainPic = in.readString();
+        _views = in.readInt();
+        _rating = in.readFloat();
+        _numPics = in.readInt();
     }
 
-    public void setYear(int year) {
-        Year = year;
-    }
+    public static final Creator<Gallery> CREATOR = new Creator<Gallery>() {
+        @Override
+        public Gallery createFromParcel(Parcel in) {
+            return new Gallery(in);
+        }
 
-    public int Month;
+        @Override
+        public Gallery[] newArray(int size) {
+            return new Gallery[size];
+        }
+    };
 
-    public int getMonth() {
-        return Month;
-    }
-
-    public void setMonth(int month) {
-        Month = month;
-    }
-
-    public String Name;
+    private String _name;
 
     public String getName() {
-        return Name;
+        return _name;
     }
 
     public void setName(String name) {
-        Name = name;
+        _name = name;
     }
 
-    public String MainPic;
+    private String _mainPic;
 
     public String getMainPic() {
-        return MainPic;
+        return _mainPic;
     }
 
     public void setMainPic(String mainPic) {
-        MainPic = mainPic;
+        _mainPic = mainPic;
     }
 
-    public int Views;
+    private int _views;
 
-    public int getViews() {
-        return Views;
+    public int getNumViews() {
+        return _views;
     }
 
-    public void setViews(int views) {
-        Views = views;
+    public void setNumViews(int views) {
+        _views = views;
     }
 
-    public float Score;
+    private float _rating;
 
-    public float getScore() {
-        return Score;
+    public float getRating() {
+        return _rating;
     }
 
-    public void setScore(float score) {
-        Score = score;
+    public void setRating(float rating) {
+        _rating = rating;
     }
 
     private int _numPics;
@@ -70,5 +75,30 @@ public class Gallery
 
     public void setNumPics(int _numPics) {
         this._numPics = _numPics;
+    }
+
+    private ArrayList<Pic> _pics;
+
+    public ArrayList<Pic> getPics() {
+        return _pics;
+    }
+
+    public Gallery()
+    {
+        _pics = new ArrayList<Pic>();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(_name);
+        parcel.writeString(_mainPic);
+        parcel.writeInt(_views);
+        parcel.writeFloat(_rating);
+        parcel.writeInt(_numPics);
     }
 }

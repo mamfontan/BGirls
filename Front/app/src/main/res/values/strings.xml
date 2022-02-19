@@ -8,7 +8,7 @@
     <string name="lblCheckStatus02">Login in the application</string>
     <string name="connectionError">Error connecting the server</string>
 
-    <!-- GalleryList -->
+    <!-- Gallery list activity -->
     <string name="lblGalleryList">Galleries</string>
     <string name="title_activity_gallery_list">Gallery List</string>
     <string name="title_activity_about">About</string>
@@ -18,9 +18,14 @@
     <string name="lblNoData">Server has not returned data</string>
     <string name="lblNumPics">Num. pics: </string>
 
-    <!-- About -->
+    <!-- Gallery pics activity -->
+    <string name="lblGalleryName">Gallery Name</string>
+
+    <!-- Video list activity -->
+    <string name="lblVideoList">Video List</string>
+
+    <!-- About activity -->
     <string name="lblAboutTitle">About</string>
     <string name="btnBack">Back</string>
-    <string name="title_activity_gallery_list2">GalleryList2Activity</string>
 
 </resources>
