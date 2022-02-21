@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import arousa.com.bgirls.R;
+import arousa.com.bgirls.helpers.ApiHelper;
 import arousa.com.bgirls.model.Gallery;
 
 public class GalleryListAdapter extends BaseAdapter {
@@ -91,10 +92,10 @@ public class GalleryListAdapter extends BaseAdapter {
         }
 
         protected Bitmap doInBackground(String... urls) {
-            String imageURL=urls[0];
-            Bitmap bimage=null;
+            String imageURL = urls[0];
+            Bitmap bimage = null;
             try {
-                InputStream in=new java.net.URL(imageURL).openStream();
+                InputStream in = new java.net.URL(imageURL).openStream();
                 bimage = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
             }

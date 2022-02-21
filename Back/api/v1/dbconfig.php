@@ -3,7 +3,9 @@
     define('dbHost', 'localhost');
     define('dbName', 'id18175334_ggalleries');
     define('dbUser', 'id18175334_ggalleries_user');
-    define('dbPass', 'l#o0{JjQ1R=/f_zG');    
+    define('dbPass', 'l#o0{JjQ1R=/f_zG');
+
+    define('pageSize', 20);
 
     // Production configuration
     // define('dbHost', 'localhost');

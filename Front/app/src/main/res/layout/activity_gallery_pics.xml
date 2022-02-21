@@ -9,16 +9,30 @@
 
     <TextView
         android:id="@+id/lblGalleryName"
-        android:layout_width="fill_parent"
+        android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/arianavioleta"
+        android:gravity="left"
+        android:paddingStart="20sp"
         android:text="@string/lblGalleryName"
         android:textColor="@color/white"
         android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <TextView
+        android:id="@+id/lblGalleryIndex"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:paddingEnd="10sp"
+        android:text="01 / 15"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
@@ -26,6 +40,8 @@
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:paddingStart="5sp"
+        android:paddingEnd="5sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintTop_toTopOf="parent"

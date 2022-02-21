@@ -12,7 +12,7 @@ public class Gallery implements Parcelable
         _mainPic = in.readString();
         _views = in.readInt();
         _rating = in.readFloat();
-        _numPics = in.readInt();
+        _pics = in.createTypedArrayList(Pic.CREATOR);
     }
 
     public static final Creator<Gallery> CREATOR = new Creator<Gallery>() {
@@ -67,20 +67,14 @@ public class Gallery implements Parcelable
         _rating = rating;
     }
 
-    private int _numPics;
-
-    public int getNumPics() {
-        return _numPics;
-    }
-
-    public void setNumPics(int _numPics) {
-        this._numPics = _numPics;
-    }
-
     private ArrayList<Pic> _pics;
 
     public ArrayList<Pic> getPics() {
         return _pics;
+    }
+
+    public int getNumPics() {
+        return _pics.size();
     }
 
     public Gallery()
@@ -99,6 +93,6 @@ public class Gallery implements Parcelable
         parcel.writeString(_mainPic);
         parcel.writeInt(_views);
         parcel.writeFloat(_rating);
-        parcel.writeInt(_numPics);
+        parcel.writeTypedList(_pics);
     }
 }

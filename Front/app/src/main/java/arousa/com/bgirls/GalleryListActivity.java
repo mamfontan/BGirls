@@ -50,35 +50,7 @@ public class GalleryListActivity extends AppCompatActivity {
 
         HookButtonEvents();
 
-        Gallery g1 = new Gallery();
-        g1.setMainPic("https://gals.kindgirls.com/d009/vine_23_38569/vine_23_38569_2.jpg");
-        g1.setName("Vine");
-        g1.setNumPics(12);
-        galleryList.add(g1);
-
-        Gallery g2 = new Gallery();
-        g2.setMainPic("https://gals.kindgirls.com/d009/delfina_26_00498/delfina_26_00498_3.jpg");
-        g2.setName("Delfine");
-        g2.setNumPics(15);
-        galleryList.add(g2);
-
-        Gallery g3 = new Gallery();
-        g3.setMainPic("https://gals.kindgirls.com/d009/sailor_21_38858/sailor_21_38858_3.jpg");
-        g3.setName("Sailor");
-        g3.setNumPics(13);
-        galleryList.add(g3);
-
-        Gallery g4 = new Gallery();
-        g4.setMainPic("https://gals.kindgirls.com/d009/polina_pafio_38755/polina_pafio_38755_6.jpg");
-        g4.setName("Polina Pafio");
-        g4.setNumPics(15);
-        galleryList.add(g4);
-
-        Gallery g5 = new Gallery();
-        g5.setMainPic("https://gals.kindgirls.com/d009/isla_26_24847/isla_26_24847_5.jpg");
-        g5.setName("Isla");
-        g5.setNumPics(12);
-        galleryList.add(g5);
+        galleryList = new GalleryLoader().getGalleryList();
 
         ListView list = (ListView) findViewById(R.id.galleryList);
         list.setAdapter(new GalleryListAdapter(this, galleryList));

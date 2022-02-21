@@ -29,13 +29,11 @@
             break;
         case 'PUT':
             // Update Product
-            $product_id=intval($_GET["product_id"]);
-            update_product($product_id);
+            updateGallery($year, $month, $name, $url);
             break;
         case 'DELETE':
             // Delete Product
-            $product_id=intval($_GET["product_id"]);
-            delete_product($product_id);
+            deleteGalleries($year, $month, $name);
             break;
         default:
             // Invalid Request Method
