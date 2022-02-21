@@ -106,6 +106,14 @@ public class GalleryLoader {
         g5.getPics().add(new Pic("https://gals.kindgirls.com/d009/dahlia_svensson_32_40966/dahlia_svensson_32_40966_12.jpg"));
         result.add(g5);
 
+        Gallery g6 = new Gallery();
+        g6.setMainPic("https://gals.kindgirls.com/d009/malena_g_33401/malena_g_33401_1.jpg");
+        g6.setName("Malena G");
+        g6.getPics().add(new Pic("https://gals.kindgirls.com/d009/malena_g_33401/malena_g_33401_1.jpg"));
+        g6.getPics().add(new Pic("https://gals.kindgirls.com/d009/malena_g_33401/malena_g_33401_2.jpg"));
+        g6.getPics().add(new Pic("https://gals.kindgirls.com/d009/malena_g_33401/malena_g_33401_3.jpg"));
+        g6.getPics().add(new Pic("https://gals.kindgirls.com/d009/malena_g_33401/malena_g_33401_4.jpg"));
+        result.add(g6);
         return result;
     }
 }
