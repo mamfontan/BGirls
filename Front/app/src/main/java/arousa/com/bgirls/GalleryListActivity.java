@@ -15,6 +15,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +33,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import arousa.com.bgirls.adapters.GalleryListAdapter;
@@ -35,7 +43,7 @@ import arousa.com.bgirls.model.Gallery;
 public class GalleryListActivity extends AppCompatActivity {
 
     String idUser = "";
-    public ArrayList<Gallery> galleryList = new ArrayList<Gallery>();
+    public ArrayList<Gallery> galleryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,25 +57,6 @@ public class GalleryListActivity extends AppCompatActivity {
         this.idUser = dbHelper.getIdentification();
 
         HookButtonEvents();
-
-        galleryList = new GalleryLoader().getGalleryList();
-
-        ListView list = (ListView) findViewById(R.id.galleryList);
-        list.setAdapter(new GalleryListAdapter(this, galleryList));
-        Log.i("onCreate", "Hemos establecido el adaptador");
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-        @Override
-        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = list.getItemAtPosition(position);
-                Gallery selectedGallery = (Gallery) o;
-
-                Intent i = new Intent(GalleryListActivity.this, GalleryPicsActivity.class);
-                i.putExtra("gallery", selectedGallery);
-                    startActivity(i);
-            }
-        });
-
         ShowNoDataLabel(false);
         GetGalleryList();
     }
@@ -94,7 +83,7 @@ public class GalleryListActivity extends AppCompatActivity {
 
     private void GetGalleryList()
     {
-        String url = Constants.ApiUrl + "gallery.php";
+        String url = Constants.ApiUrl + "gallery2.php";
 
         try {
 
@@ -106,6 +95,25 @@ public class GalleryListActivity extends AppCompatActivity {
         {
             Log.e("ERROR", error.getMessage());
         }
+    }
+
+    private void UpdateListElements()
+    {
+        ListView list = (ListView) findViewById(R.id.galleryList);
+        list.setAdapter(new GalleryListAdapter(this, galleryList));
+        Log.i("onCreate", "Hemos establecido el adaptador");
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = list.getItemAtPosition(position);
+                Gallery selectedGallery = (Gallery) o;
+
+                Intent i = new Intent(GalleryListActivity.this, GalleryPicsActivity.class);
+                i.putExtra("gallery", selectedGallery);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -138,13 +146,12 @@ public class GalleryListActivity extends AppCompatActivity {
                     // Success
                     InputStream responseBody = myConnection.getInputStream();
                     InputStream in = new BufferedInputStream(myConnection.getInputStream());
-                    String cad = convertStreamToString(in);
-
+                    String data = convertStreamToString(in);
                     myConnection.disconnect();
 
-                    if (cad.contains("Server is online")) {
-                        result = 0;
-                    }
+                    Gson gson = new Gson();
+                    TypeToken<ArrayList<Gallery>> token = new TypeToken<ArrayList<Gallery>>() {};
+                    galleryList = gson.fromJson(data, token.getType());
                 }
             }
             catch (Exception error) {
@@ -157,11 +164,7 @@ public class GalleryListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer result) {
             // Call activity method with results
-            if (result == 0) {
-
-            } else {
-
-            }
+            UpdateListElements();
         }
 
         private String convertStreamToString(InputStream is) {

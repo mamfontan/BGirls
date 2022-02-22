@@ -3,16 +3,39 @@ package arousa.com.bgirls.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Gallery implements Parcelable
 {
+    public Integer id;
+
+    public String name;
+
+    public String image;
+
+    public List<String> pics;
+
+    public Integer views;
+
+    public float rating;
+
     protected Gallery(Parcel in) {
-        _name = in.readString();
-        _mainPic = in.readString();
-        _views = in.readInt();
-        _rating = in.readFloat();
-        _pics = in.createTypedArrayList(Pic.CREATOR);
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        image = in.readString();
+        pics = in.createStringArrayList();
+        if (in.readByte() == 0) {
+            views = null;
+        } else {
+            views = in.readInt();
+        }
+        rating = in.readFloat();
     }
 
     public static final Creator<Gallery> CREATOR = new Creator<Gallery>() {
@@ -27,61 +50,6 @@ public class Gallery implements Parcelable
         }
     };
 
-    private String _name;
-
-    public String getName() {
-        return _name;
-    }
-
-    public void setName(String name) {
-        _name = name;
-    }
-
-    private String _mainPic;
-
-    public String getMainPic() {
-        return _mainPic;
-    }
-
-    public void setMainPic(String mainPic) {
-        _mainPic = mainPic;
-    }
-
-    private int _views;
-
-    public int getNumViews() {
-        return _views;
-    }
-
-    public void setNumViews(int views) {
-        _views = views;
-    }
-
-    private float _rating;
-
-    public float getRating() {
-        return _rating;
-    }
-
-    public void setRating(float rating) {
-        _rating = rating;
-    }
-
-    private ArrayList<Pic> _pics;
-
-    public ArrayList<Pic> getPics() {
-        return _pics;
-    }
-
-    public int getNumPics() {
-        return _pics.size();
-    }
-
-    public Gallery()
-    {
-        _pics = new ArrayList<Pic>();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -89,10 +57,21 @@ public class Gallery implements Parcelable
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(_name);
-        parcel.writeString(_mainPic);
-        parcel.writeInt(_views);
-        parcel.writeFloat(_rating);
-        parcel.writeTypedList(_pics);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeString(name);
+        parcel.writeString(image);
+        parcel.writeStringList(pics);
+        if (views == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(views);
+        }
+        parcel.writeFloat(rating);
     }
 }

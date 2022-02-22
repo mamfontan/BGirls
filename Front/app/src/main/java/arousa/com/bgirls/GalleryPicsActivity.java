@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -24,14 +25,19 @@ public class GalleryPicsActivity extends AppCompatActivity {
 
     private Gallery _gallery;
     private Integer _actualPicIndex = 0;
-    private ArrayList<Bitmap> _bitmaps;
-    private ArrayList<Boolean> _imgLoaded;
+    private Integer _loadedPics = 0;
+
+    private ArrayList<Bitmap> _bitmaps = new ArrayList<Bitmap>();
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
 
     private ScaleGestureDetector scaleGestureDetector;
     private float mScaleFactor = 1.0f;
+
+    private ImageView _mainImageView;
+    private TextView _galleryIndex;
+    private TextView _loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,51 +50,84 @@ public class GalleryPicsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_pics);
 
-        LoadGalleryName();
-        LoadGalleryIndex();
-        LoadGalleryEmptyImages();
-        LoadGalleryImage(_actualPicIndex);
+        _mainImageView = (ImageView) findViewById(R.id.imageView);
+        _loader = (TextView) findViewById(R.id.lblGalleryLoading);
+        _galleryIndex = (TextView) findViewById(R.id.lblGalleryIndex);
 
-        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+        LoadGalleryName();
+
+        UpdateLoaderText(_loadedPics, _gallery.pics.size());
+        ShowMainImage(false);
+        ShowLoader(true);
+
+        LoadGalleryImages();
+
+        //scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 
     private void LoadGalleryName()
     {
         TextView galleryName = (TextView) findViewById(R.id.lblGalleryName);
-        galleryName.setText(_gallery.getName());
+        galleryName.setText(_gallery.name);
     }
 
-    private void LoadGalleryIndex()
+    private void ShowMainImage(boolean show)
     {
-        TextView galleryIndex = (TextView) findViewById(R.id.lblGalleryIndex);
-        galleryIndex.setText((_actualPicIndex + 1) + " / " + _gallery.getNumPics());
-    }
-
-    private void LoadGalleryEmptyImages()
-    {
-        _bitmaps = new ArrayList<Bitmap>();
-        _imgLoaded = new ArrayList<Boolean>();
-
-        for (Integer index = 0; index < _gallery.getNumPics(); index++)
-        {
-            Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.question);
-            _bitmaps.add(newBitmap);
-
-            _imgLoaded.add(false);
+        if (show) {
+            _mainImageView.setVisibility(View.VISIBLE);
+            _galleryIndex.setVisibility(View.VISIBLE);
+        } else {
+            _mainImageView.setVisibility(View.INVISIBLE);
+            _galleryIndex.setVisibility(View.INVISIBLE);
         }
     }
 
-    private void LoadGalleryImage(Integer index)
+    private void SetMainImage()
     {
-        ImageView img = (ImageView) findViewById(R.id.imageView);
-        new DownloadImageFromInternet(img).execute(_gallery.getPics().get(index).getFile());
+        _mainImageView.setImageBitmap(_bitmaps.get(_actualPicIndex));
+        SetGalleryIndex();
+    }
+
+    private void ShowLoader(boolean show)
+    {
+        if (show)
+            _loader.setVisibility(View.VISIBLE);
+        else
+            _loader.setVisibility(View.INVISIBLE);
+    }
+
+    private void UpdateLoaderText(Integer loadedPics, Integer numPics)
+    {
+        _loader.setText("Loading: " + loadedPics + " / " +  numPics);
+    }
+
+    private void SetGalleryIndex()
+    {
+        _galleryIndex.setText((_actualPicIndex + 1) + " / " + _gallery.pics.size());
+    }
+
+    /*
+    private void LoadGalleryImages()
+    {
+        _bitmaps = new ArrayList<Bitmap>();
+
+        for (Integer index = 0; index < _gallery.pics.size(); index++)
+        {
+            Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.question);
+            _bitmaps.add(newBitmap);
+        }
+    }
+    */
+
+    private void LoadGalleryImages()
+    {
+        for (Integer index = 0; index < _gallery.pics.size(); index++)
+            new DownloadImageFromInternet().execute(_gallery.pics.get(index));
     }
     
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
 
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
+        public DownloadImageFromInternet() {
         }
 
         protected void onPreExecute(Bitmap result) {
@@ -107,14 +146,26 @@ public class GalleryPicsActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-            LoadGalleryIndex();
+            _bitmaps.add(result);
+
+            _loadedPics = _loadedPics + 1;
+
+            if (_loadedPics == _gallery.pics.size()) {
+                ShowLoader(false);
+                ShowMainImage(true);
+                SetMainImage();
+            } else {
+                UpdateLoaderText(_loadedPics, _gallery.pics.size());
+            }
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+        if (_loader.getVisibility() == View.VISIBLE)
+            return false;
+
         switch(event.getAction())
         {
             case MotionEvent.ACTION_MOVE:
@@ -132,15 +183,16 @@ public class GalleryPicsActivity extends AppCompatActivity {
                             _actualPicIndex = _actualPicIndex - 1;
                         }
                     } else {
-                        if (_actualPicIndex < _gallery.getNumPics()-1) {
+                        if (_actualPicIndex < _gallery.pics.size()-1) {
                             _actualPicIndex = _actualPicIndex + 1;
                         }
                     }
+                    SetMainImage();
                 }
                 break;
         }
 
-        LoadGalleryImage(_actualPicIndex);
+        //LoadGalleryImage();
 
         return super.onTouchEvent(event);
     }
@@ -148,11 +200,10 @@ public class GalleryPicsActivity extends AppCompatActivity {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            ImageView img = (ImageView) findViewById(R.id.imageView);
             mScaleFactor *= scaleGestureDetector.getScaleFactor();
             mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
-            img.setScaleX(mScaleFactor);
-            img.setScaleY(mScaleFactor);
+            _mainImageView.setScaleX(mScaleFactor);
+            _mainImageView.setScaleY(mScaleFactor);
             return true;
         }
     }

@@ -61,16 +61,16 @@ public class GalleryListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        new DownloadImageFromInternet(holder.galleryImage).execute(listData.get(position).getMainPic());
-        holder.galleryName.setText(listData.get(position).getName());
+        new DownloadImageFromInternet(holder.galleryImage).execute(listData.get(position).image);
+        holder.galleryName.setText(listData.get(position).name);
 
-        Integer numPics = listData.get(position).getNumPics();
-        holder.galleryPics.setText( "Num. pics: "  + numPics.toString());
+        Integer numPics = listData.get(position).pics.size();
+        holder.galleryPics.setText( "Num. pics: "  + numPics);
 
-        Integer numViews = listData.get(position).getNumViews();
-        holder.galleryViews.setText("Views: " + numViews.toString());
+        Integer numViews = listData.get(position).views;
+        holder.galleryViews.setText("Views: " + numViews);
 
-        float rating = listData.get(position).getRating();
+        float rating = listData.get(position).rating;
         holder.galleryRating.setText("Rating: " + rating);
 
         return view;
