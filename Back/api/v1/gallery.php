@@ -74,7 +74,7 @@
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-		$query = "SELECT year, month, name, url, views, rating FROM galleries ORDER BY year, month";
+		$query = "SELECT id, name, url, views, rating FROM galleries ORDER BY year, month";
         
 		$response = array();
 		$result = mysqli_query($link, $query);
@@ -97,7 +97,7 @@
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-		$query = "SELECT year, month, name, url, views, rating FROM galleries WHERE year = " . $year . " AND month = " . $month;
+		$query = "SELECT id, name, url, views, rating FROM galleries WHERE year = " . $year . " AND month = " . $month;
         
 		$response = array();
 		$result = mysqli_query($link, $query);
