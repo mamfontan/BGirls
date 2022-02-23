@@ -7,12 +7,15 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -40,7 +43,7 @@ import arousa.com.bgirls.adapters.GalleryListAdapter;
 import arousa.com.bgirls.database.DbHelper;
 import arousa.com.bgirls.model.Gallery;
 
-public class GalleryListActivity extends AppCompatActivity {
+public class GalleryListActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     String idUser = "";
     public ArrayList<Gallery> galleryList = new ArrayList<>();
@@ -57,8 +60,40 @@ public class GalleryListActivity extends AppCompatActivity {
         this.idUser = dbHelper.getIdentification();
 
         HookButtonEvents();
+        addListenerMenu();
         ShowNoDataLabel(false);
         GetGalleryList();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gallery_list, menu);
+        return true;
+    }
+
+    public void addListenerMenu() {
+        ImageView imgMenu = (ImageView) findViewById(R.id.imgMenu);
+        imgMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                PopupMenu popup = new PopupMenu(GalleryListActivity.this, imgMenu);
+                popup.setOnMenuItemClickListener(GalleryListActivity.this);
+                popup.inflate(R.menu.menu_gallery_list);
+                popup.show();
+            }
+        });
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuShowVideos:
+                Intent i = new Intent(GalleryListActivity.this, VideoListActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void ShowNoDataLabel(boolean value)

@@ -11,9 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/menu" />
+
         <activity
             android:name=".VideoListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/NoActionBar"/>
         <activity
             android:name=".GalleryPicsActivity"
             android:exported="false"

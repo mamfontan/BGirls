@@ -108,19 +108,6 @@ public class GalleryPicsActivity extends AppCompatActivity {
         _galleryIndex.setText((_actualPicIndex + 1) + SEPARATOR + _gallery.pics.size());
     }
 
-    /*
-    private void LoadGalleryImages()
-    {
-        _bitmaps = new ArrayList<Bitmap>();
-
-        for (Integer index = 0; index < _gallery.pics.size(); index++)
-        {
-            Bitmap newBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.question);
-            _bitmaps.add(newBitmap);
-        }
-    }
-    */
-
     private void LoadGalleryImages()
     {
         for (Integer index = 0; index < _gallery.pics.size(); index++)
@@ -183,10 +170,14 @@ public class GalleryPicsActivity extends AppCompatActivity {
                     if (x2 > x1) {
                         if (_actualPicIndex > 0) {
                             _actualPicIndex = _actualPicIndex - 1;
+                        } else {
+                            _actualPicIndex = _gallery.pics.size()-1;
                         }
                     } else {
                         if (_actualPicIndex < _gallery.pics.size()-1) {
                             _actualPicIndex = _actualPicIndex + 1;
+                        } else {
+                            _actualPicIndex = 0;
                         }
                     }
                     SetMainImage();
