@@ -30,12 +30,7 @@
                     Do not forget to have a look at our free Photo Archive: 124766 photos in 9151 galleries, growing daily (or almost).
                 </div>                
             </div>
-            <div class="row">
-                <div class="col-sm-3 col-md-3 text-center">Uno</div>
-                <div class="col-sm-3 col-md-3 text-center">Dos</div>
-                <div class="col-sm-3 col-md-3 text-center">Tres</div>
-                <div class="col-sm-3 col-md-3 text-center">Cuatro</div>
-            </div>
+            <br/>
             <hr>
             <div class="row">
                 <div class="col-sm-3 col-md-3 text-center">Galleries: <?php echo countTableElements('galleries'); ?></div>

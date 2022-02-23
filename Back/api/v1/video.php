@@ -8,26 +8,27 @@
     getParameters();
 
     $request_method = $_SERVER["REQUEST_METHOD"];
+    
     switch($request_method)
     {
         case 'GET':
             // Retrieve galleries
-            getGalleries($page);
+            getVideos($page);
             break;
         case 'POST':
             break;
         case 'PUT':
             break;
         case 'DELETE':
-            deleteGallery($id);
+            deleteVideo($id);
             break;
         default:
             // Invalid Request Method
             header("HTTP/1.0 405 Method Not Allowed");
             break;
-    }    
+    }
 
-    function getGalleries($page)
+    function getVideos($page)
 	{
         $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
 
@@ -36,46 +37,29 @@
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-		$queryGallery = "SELECT id, name, image, views, rating FROM galleries ORDER BY id DESC LIMIT " . $page * pageSize . ", " . pageSize;
+		$query = "SELECT id, name, url, views, rating FROM videos ORDER BY id DESC LIMIT " . $page * pageSize . ", " . pageSize;
         
-		$response = array();
-		$result = mysqli_query($link, $queryGallery);
+		$result = mysqli_query($link, $query);
 
-        $galleries = array();
+        $videos = array();
 		while($row = mysqli_fetch_assoc($result))
 		{
-            $newGallery = new Gallery();
+            $newVideo = new Video();
 
-            $newGallery->id = $row['id'];
-            $newGallery->name = $row['name'];
-            $newGallery->image = $row['image'];
-            $newGallery->views = $row['views'];
-            $newGallery->rating = $row['rating'];
-            $newGallery->pics = array();
+            $newVideo->id = $row['id'];
+            $newVideo->name = $row['name'];
+            $newVideo->url = $row['url'];
+            $newVideo->views = $row['views'];
+            $newVideo->rating = $row['rating'];
 
-            array_push($galleries, $newGallery);
+            array_push($videos, $newVideo);
 		}
 
-        // Ahora recuperamos las fotos de cada galería
-        foreach ($galleries as $item) {
-            $queryPics = "SELECT url FROM pics WHERE idGallery = " . $item->id;
-
-            $responsePics = array();
-            $resultPics = mysqli_query($link, $queryPics);
-
-            while($row = mysqli_fetch_assoc($resultPics))
-            {
-                array_push($responsePics, $row['url']);
-            }
-
-            $item->pics = $responsePics;
-        }        
-
 		header('Content-Type: application/json');
-		echo json_encode($galleries);
+		echo json_encode($videos);
 	}    
-
-    function deleteGallery($id)
+    
+    function deleteVideo($id)
     {
         $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
 
@@ -84,13 +68,11 @@
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-		$query = "DELETE FROM galleries WHERE id = " . $id;
-        
-		$response = array();
+		$query = "DELETE FROM videos WHERE id = " . $id;
 		$result = mysqli_query($link, $query);
 
 		header('Content-Type: application/json');
-		echo json_encode($response);        
+		echo json_encode($result);
     }
 
     function getParameters()
@@ -108,6 +90,7 @@
             $id = $_REQUEST['id'];
         }
   
-    }    
+    }       
+
 
 ?>

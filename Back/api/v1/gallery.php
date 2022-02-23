@@ -1,10 +1,9 @@
 <?php
     include_once('dbconfig.php');
+    include_once('model.php');
 
-    $year = '';
-    $month = '';
-    $name = '';
-    $url = '';
+    $id = -1;
+    $page = 0;
 
     getParameters();
 
@@ -13,115 +12,99 @@
     {
         case 'GET':
             // Retrieve galleries
-            if(empty($year) || empty($month)) {
-                getGalleries();
-            } else {
-                getGallery($year, $month);
-            }
+            getGalleries($page);
             break;
         case 'POST':
-            // Insert Product
-            if(empty($year) || empty($month)) {
-                echo "Parameters are empty";
-            } else {
-                insertGallery($year, $month, $name, $url);
-            }            
             break;
         case 'PUT':
-            // Update Product
-            updateGallery($year, $month, $name, $url);
             break;
         case 'DELETE':
-            // Delete Product
-            deleteGalleries($year, $month, $name);
+            deleteGallery($id);
             break;
         default:
             // Invalid Request Method
             header("HTTP/1.0 405 Method Not Allowed");
             break;
+    }    
+
+    function getGalleries($page)
+	{
+        $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
+
+        // Check connection
+        if ($link === false) {
+            die("ERROR: Could not connect. " . mysqli_connect_error());
+        }
+
+		$queryGallery = "SELECT id, name, image, views, rating FROM galleries ORDER BY id DESC LIMIT " . $page * pageSize . ", " . pageSize;
+        
+		$result = mysqli_query($link, $queryGallery);
+
+        $galleries = array();
+		while($row = mysqli_fetch_assoc($result))
+		{
+            $newGallery = new Gallery();
+
+            $newGallery->id = $row['id'];
+            $newGallery->name = $row['name'];
+            $newGallery->image = $row['image'];
+            $newGallery->views = $row['views'];
+            $newGallery->rating = $row['rating'];
+            $newGallery->pics = array();
+
+            array_push($galleries, $newGallery);
+		}
+
+        // Ahora recuperamos las fotos de cada galería
+        foreach ($galleries as $item) {
+            $queryPics = "SELECT url FROM pics WHERE idGallery = " . $item->id;
+
+            $responsePics = array();
+            $resultPics = mysqli_query($link, $queryPics);
+
+            while($row = mysqli_fetch_assoc($resultPics))
+            {
+                array_push($responsePics, $row['url']);
+            }
+
+            $item->pics = $responsePics;
+        }        
+
+		header('Content-Type: application/json');
+		echo json_encode($galleries);
+	}    
+
+    function deleteGallery($id)
+    {
+        $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
+
+        // Check connection
+        if ($link === false) {
+            die("ERROR: Could not connect. " . mysqli_connect_error());
+        }
+
+		$query = "DELETE FROM galleries WHERE id = " . $id;
+		$result = mysqli_query($link, $query);
+
+		header('Content-Type: application/json');
+		echo json_encode($result);        
     }
 
     function getParameters()
     {
-        global $year;
-        global $month;
-        global $name;
-        global $url;
+        global $page;
 
-        if(isset($_GET['year'])) {
-            $year = $_REQUEST['year'];
+        if(isset($_GET['page'])) {
+            $page = $_REQUEST['page'];
         }
-    
-        if(isset($_GET['month'])) {
-            $month = $_REQUEST['month'];
-        }
-    
-        if(isset($_GET['name'])) {
-            $name = $_REQUEST['name'];
-        }
-        
-        if(isset($_GET['url'])) {
-            $url = $_REQUEST['url'];
-        }           
-    }
-
-    function getGalleries()
-	{
-        $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
-
-        // Check connection
-        if ($link === false) {
-            die("ERROR: Could not connect. " . mysqli_connect_error());
+        else {
+            $page = 0;
         }
 
-		$query = "SELECT id, name, url, views, rating FROM galleries ORDER BY year, month";
-        
-		$response = array();
-		$result = mysqli_query($link, $query);
-
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$response[] = $row;
-		}
-
-		header('Content-Type: application/json');
-		echo json_encode($response);
-	}
-
-    function getGallery($year, $month)
-	{
-        $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
-
-        // Check connection
-        if ($link === false) {
-            die("ERROR: Could not connect. " . mysqli_connect_error());
+        if(isset($_GET['id'])) {
+            $id = $_REQUEST['id'];
         }
+  
+    }    
 
-		$query = "SELECT id, name, url, views, rating FROM galleries WHERE year = " . $year . " AND month = " . $month;
-        
-		$response = array();
-		$result = mysqli_query($link, $query);
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$response[] = $row;
-		}
-
-		header('Content-Type: application/json');
-		echo json_encode($response);
-	}    
-
-    function insertGallery($year, $month, $name, $url)
-    {
-
-    }
-
-    function updateGallery($year, $month, $name, $url)
-    {
-
-    }
-
-    function deleteGalleries($year, $month, $name)
-    {
-
-    }
 ?>

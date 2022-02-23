@@ -86,9 +86,14 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.menuShowVideos:
-                Intent i = new Intent(GalleryListActivity.this, VideoListActivity.class);
+                i = new Intent(GalleryListActivity.this, VideoListActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.menuAbout:
+                i = new Intent(GalleryListActivity.this, AboutActivity.class);
                 startActivity(i);
                 return true;
             default:
@@ -118,7 +123,7 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
 
     private void GetGalleryList()
     {
-        String url = Constants.ApiUrl + "gallery2.php";
+        String url = Constants.ApiUrl + "gallery.php";
 
         try {
 

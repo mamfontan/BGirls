@@ -185,8 +185,6 @@ public class GalleryPicsActivity extends AppCompatActivity {
                 break;
         }
 
-        //LoadGalleryImage();
-
         return super.onTouchEvent(event);
     }
 
@@ -200,4 +198,22 @@ public class GalleryPicsActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    /*
+    @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the state of item position
+        outState.putParcelableArray() .putInt(SELECTED_ITEM_POSITION, _bitmaps);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Read the state of item position
+        _bitmaps = savedInstanceState.gettInt(SELECTED_ITEM_POSITION);
+    }
+     */
 }

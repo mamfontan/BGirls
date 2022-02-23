@@ -9,6 +9,7 @@
     <string name="connectionError">Error connecting the server</string>
 
     <!-- Gallery list activity -->
+    <string name="lblGalleryListName">Beauty Girls on pics</string>
     <string name="lblGalleryList">Galleries</string>
     <string name="title_activity_gallery_list">Gallery List</string>
     <string name="title_activity_about">About</string>
@@ -22,6 +23,7 @@
     <string name="lblGalleryName">Gallery Name</string>
 
     <!-- Video list activity -->
+    <string name="lblVideoListName">Beauty Girls on video</string>
     <string name="lblVideoList">Video List</string>
 
     <!-- About activity -->

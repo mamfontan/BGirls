@@ -7,7 +7,7 @@
         android:title="Show pics"/>
     <item  android:id="@+id/item2"
         android:title="Item 2"/>
-    <item  android:id="@+id/item3"
-        android:title="Item 3"
+    <item  android:id="@+id/menuAbout"
+        android:title="About"
         app:showAsAction="withText"/>
 </menu>

@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background02"
-    tools:context=".VideoListActivity">
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
 
     <TextView
-        android:id="@+id/lblVideoList"
+        android:id="@+id/lblAppTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lblVideoList"
-        android:textSize="95sp"
+        android:text="@string/lblVideoListName"
+        android:textSize="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
         android:textColor="@color/white"
-        android:fontFamily="@font/arianavioleta"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        android:fontFamily="@font/arianavioleta" />
 
     <ImageView
         android:id="@+id/imgMenu"
         android:layout_width="58dp"
         android:layout_height="39dp"
+        android:layout_marginTop="8dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/lista" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ListView android:id="@+id/videoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/lblAppTitle"
+        android:background="@android:color/transparent"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false"/>
+
+    <TextView android:id="@+id/lblNoData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="@string/lblNoData"/>
+
+</RelativeLayout>
