@@ -23,6 +23,8 @@ import arousa.com.bgirls.model.Gallery;
 
 public class GalleryPicsActivity extends AppCompatActivity {
 
+    private final String SEPARATOR = " / ";
+
     private Gallery _gallery;
     private Integer _actualPicIndex = 0;
     private Integer _loadedPics = 0;
@@ -98,12 +100,12 @@ public class GalleryPicsActivity extends AppCompatActivity {
 
     private void UpdateLoaderText(Integer loadedPics, Integer numPics)
     {
-        _loader.setText("Loading: " + loadedPics + " / " +  numPics);
+        _loader.setText(loadedPics + SEPARATOR +  numPics);
     }
 
     private void SetGalleryIndex()
     {
-        _galleryIndex.setText((_actualPicIndex + 1) + " / " + _gallery.pics.size());
+        _galleryIndex.setText((_actualPicIndex + 1) + SEPARATOR + _gallery.pics.size());
     }
 
     /*
