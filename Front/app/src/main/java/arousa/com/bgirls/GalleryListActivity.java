@@ -48,6 +48,7 @@ import arousa.com.bgirls.model.Gallery;
 public class GalleryListActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     String idUser = "";
+    String order = "id";
     public ArrayList<Gallery> galleryList = new ArrayList<>();
 
     @Override
@@ -61,7 +62,6 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
         DbHelper dbHelper = new DbHelper(GalleryListActivity.this);
         this.idUser = dbHelper.getIdentification();
 
-        //HookButtonEvents();
         addListenerMenu();
         ShowNoDataLabel(false);
         GetGalleryList();
@@ -88,16 +88,18 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Intent i;
         switch (item.getItemId()) {
             case R.id.menuViewMoreRecent:
-                Collections.sort(galleryList, (Gallery a1, Gallery a2) -> a1.id.compareTo(a2.id));
-                //galleryList.sort(Comparator.comparing(Gallery::));
+                order = "id";
+                GetGalleryList();
                 return true;
             case R.id.menuViewMostVoted:
-                Collections.sort(galleryList, (Gallery a1, Gallery a2) -> a1.views.compareTo(a2.views));
+                order = "views";
+                GetGalleryList();
                 return true;
             case R.id.menuAbout:
+                Intent i = new Intent(GalleryListActivity.this, AboutActivity.class);
+                startActivity(i);
                 return true;
             default:
                 return false;
@@ -113,22 +115,9 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
             label.setVisibility(View.INVISIBLE);
     }
 
-    /*
-    private void HookButtonEvents()
-    {
-        ImageView imgMenu = (ImageView) findViewById(R.id.imgMenu);
-        imgMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO
-            }
-        });
-    }
-    */
-
     private void GetGalleryList()
     {
-        String url = Constants.ApiUrl + "gallery.php";
+        String url = Constants.ApiUrl + "gallery.php?order=" + order;
 
         try {
 

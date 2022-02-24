@@ -4,6 +4,7 @@
 
     $id = -1;
     $page = 0;
+    $order = 0;
 
     getParameters();
 
@@ -12,7 +13,7 @@
     {
         case 'GET':
             // Retrieve galleries
-            getGalleries($page);
+            getGalleries($page, $order);
             break;
         case 'POST':
             updateGalleryViews($id);
@@ -28,7 +29,7 @@
             break;
     }    
 
-    function getGalleries($page)
+    function getGalleries($page, $order)
 	{
         $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
 
@@ -37,7 +38,7 @@
             die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-		$queryGallery = "SELECT id, name, image, views, rating FROM galleries ORDER BY id DESC LIMIT " . $page * pageSize . ", " . pageSize;
+		$queryGallery = "SELECT id, name, image, views, rating FROM galleries ORDER BY " . $order . " DESC LIMIT " . $page * pageSize . ", " . pageSize;
         
 		$result = mysqli_query($link, $queryGallery);
 
@@ -117,6 +118,7 @@
     {
         global $page;
         global $id;
+        global $order;
 
         if(isset($_GET['page'])) {
             $page = $_REQUEST['page'];
@@ -124,6 +126,13 @@
         else {
             $page = 0;
         }
+
+        if(isset($_GET['order'])) {
+            $order = $_REQUEST['order'];
+        }
+        else {
+            $order = 0;
+        }        
 
         if(isset($_POST['id'])) {
             $id = $_POST['id'];

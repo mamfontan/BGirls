@@ -19,10 +19,6 @@
     <!-- Gallery pics activity -->
     <string name="lblGalleryName">Gallery Name</string>
 
-    <!-- Video list activity -->
-    <string name="lblVideoListName">Beauty Girls</string>
-    <string name="lblVideoList">Video List</string>
-
     <!-- About activity -->
     <string name="lblAboutTitle">About</string>
     <string name="btnBack">Back</string>

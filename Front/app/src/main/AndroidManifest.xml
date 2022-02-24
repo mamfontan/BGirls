@@ -16,10 +16,6 @@
             android:resource="@xml/menu" />
 
         <activity
-            android:name=".VideoListActivity"
-            android:exported="false"
-            android:theme="@style/NoActionBar"/>
-        <activity
             android:name=".GalleryPicsActivity"
             android:exported="false"
             android:theme="@style/NoActionBar" />

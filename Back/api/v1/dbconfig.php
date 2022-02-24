@@ -5,7 +5,7 @@
     define('dbUser', 'id18175334_ggalleries_user');
     define('dbPass', 'l#o0{JjQ1R=/f_zG');
 
-    define('pageSize', 25);
+    define('pageSize', 30);
 
     function countTableElements($tableName)
     {
