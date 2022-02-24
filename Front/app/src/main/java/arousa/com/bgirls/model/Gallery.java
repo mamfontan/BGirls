@@ -11,6 +11,8 @@ public class Gallery implements Parcelable
 {
     public Integer id;
 
+    // public Integer getId { return id; }
+
     public String name;
 
     public String image;

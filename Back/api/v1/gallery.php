@@ -15,6 +15,7 @@
             getGalleries($page);
             break;
         case 'POST':
+            updateGalleryViews($id);
             break;
         case 'PUT':
             break;
@@ -74,6 +75,28 @@
 		echo json_encode($galleries);
 	}    
 
+    function updateGalleryViews($id)
+    {
+        $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
+
+        // Check connection
+        if ($link === false) {
+            die("ERROR: Could not connect. " . mysqli_connect_error());
+        }
+
+		$queryGallery = "SELECT views, rating FROM galleries WHERE id = " . $id;
+		$result = mysqli_query($link, $queryGallery);    
+
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $actualViews = $row['views'];
+        }    
+
+        $updateQuery = "UPDATE galleries SET views = " . ($actualViews + 1) . " WHERE id = " . $id;
+        $result = mysqli_query($link, $updateQuery);
+        echo json_encode($result);
+    }
+
     function deleteGallery($id)
     {
         $link = mysqli_connect(dbHost, dbUser, dbPass, dbName);
@@ -93,6 +116,7 @@
     function getParameters()
     {
         global $page;
+        global $id;
 
         if(isset($_GET['page'])) {
             $page = $_REQUEST['page'];
@@ -101,8 +125,8 @@
             $page = 0;
         }
 
-        if(isset($_GET['id'])) {
-            $id = $_REQUEST['id'];
+        if(isset($_POST['id'])) {
+            $id = $_POST['id'];
         }
   
     }    

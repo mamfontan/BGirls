@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="example.javatpoint.com.optionmenu.MainActivity">
 
-    <item  android:id="@+id/menuShowVideos"
-        android:title="Show videos"/>
-    <item  android:id="@+id/item2"
-        android:title="Item 2"/>
+    <item  android:id="@+id/menuViewMoreRecent"
+        android:title="@string/menuViewMoreRecent"/>
+    <item  android:id="@+id/menuViewMostVoted"
+        android:title="@string/menuViewMostVoted"/>
     <item  android:id="@+id/menuAbout"
-        android:title="About"
+        android:title="@string/menuAbout"
         app:showAsAction="withText"/>
 </menu>

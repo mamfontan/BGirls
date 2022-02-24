@@ -35,6 +35,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +61,7 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
         DbHelper dbHelper = new DbHelper(GalleryListActivity.this);
         this.idUser = dbHelper.getIdentification();
 
-        HookButtonEvents();
+        //HookButtonEvents();
         addListenerMenu();
         ShowNoDataLabel(false);
         GetGalleryList();
@@ -88,13 +90,14 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
     public boolean onMenuItemClick(MenuItem item) {
         Intent i;
         switch (item.getItemId()) {
-            case R.id.menuShowVideos:
-                i = new Intent(GalleryListActivity.this, VideoListActivity.class);
-                startActivity(i);
+            case R.id.menuViewMoreRecent:
+                Collections.sort(galleryList, (Gallery a1, Gallery a2) -> a1.id.compareTo(a2.id));
+                //galleryList.sort(Comparator.comparing(Gallery::));
+                return true;
+            case R.id.menuViewMostVoted:
+                Collections.sort(galleryList, (Gallery a1, Gallery a2) -> a1.views.compareTo(a2.views));
                 return true;
             case R.id.menuAbout:
-                i = new Intent(GalleryListActivity.this, AboutActivity.class);
-                startActivity(i);
                 return true;
             default:
                 return false;
@@ -110,6 +113,7 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
             label.setVisibility(View.INVISIBLE);
     }
 
+    /*
     private void HookButtonEvents()
     {
         ImageView imgMenu = (ImageView) findViewById(R.id.imgMenu);
@@ -120,6 +124,7 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
             }
         });
     }
+    */
 
     private void GetGalleryList()
     {
@@ -149,6 +154,17 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
                 Object o = list.getItemAtPosition(position);
                 Gallery selectedGallery = (Gallery) o;
 
+                try {
+                    String url = Constants.ApiUrl + "gallery.php";
+                    URL endPoint = new URL(url);
+                    AddGalleryView addGalleryView = new AddGalleryView(selectedGallery.id);
+                    addGalleryView.execute(endPoint);
+                }
+                catch (Exception error)
+                {
+                    Log.e("ERROR", error.getMessage());
+                }
+
                 Intent i = new Intent(GalleryListActivity.this, GalleryPicsActivity.class);
                 i.putExtra("gallery", selectedGallery);
                 startActivity(i);
@@ -169,6 +185,61 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
             cConnection.execute(endPoint);
         }
         catch (Exception error) {
+        }
+    }
+
+    private class AddGalleryView extends AsyncTask<URL, Void, Integer>
+    {
+        private Integer _idGallery;
+
+        public AddGalleryView(Integer idGallery)
+        {
+            _idGallery = idGallery;
+        }
+
+        @Override
+        protected Integer doInBackground(URL... urls) {
+            Integer result = 0;
+            try
+            {
+                Map<String,Object> params = new LinkedHashMap<>();
+                params.put("id", _idGallery);
+
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String,Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+                HttpURLConnection myConnection = (HttpURLConnection) urls[0].openConnection();
+                myConnection.setRequestMethod("POST");
+                myConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                myConnection.setDoOutput(true);
+                myConnection.getOutputStream().write(postDataBytes);
+
+                Reader in = new BufferedReader(new InputStreamReader(myConnection.getInputStream(), "UTF-8"));
+
+                StringBuilder sb = new StringBuilder();
+                for (int c; (c = in.read()) >= 0;)
+                    sb.append((char)c);
+                String response = sb.toString();
+
+                if (myConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    myConnection.disconnect();
+                }
+            }
+            catch (Exception error) {
+                result = -1;
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
         }
     }
 

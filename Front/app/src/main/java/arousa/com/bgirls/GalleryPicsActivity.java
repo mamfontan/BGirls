@@ -34,9 +34,6 @@ public class GalleryPicsActivity extends AppCompatActivity {
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
 
-    private ScaleGestureDetector scaleGestureDetector;
-    private float mScaleFactor = 1.0f;
-
     private ImageView _mainImageView;
     private TextView _galleryIndex;
     private TextView _loader;
@@ -63,8 +60,6 @@ public class GalleryPicsActivity extends AppCompatActivity {
         ShowLoader(true);
 
         LoadGalleryImages();
-
-        //scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 
     private void LoadGalleryName()
@@ -188,32 +183,14 @@ public class GalleryPicsActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            mScaleFactor *= scaleGestureDetector.getScaleFactor();
-            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 10.0f));
-            _mainImageView.setScaleX(mScaleFactor);
-            _mainImageView.setScaleY(mScaleFactor);
-            return true;
-        }
-    }
-
-    /*
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        // Save the state of item position
-        outState.putParcelableArray() .putInt(SELECTED_ITEM_POSITION, _bitmaps);
     }
 
     @Override
     protected void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        // Read the state of item position
-        _bitmaps = savedInstanceState.gettInt(SELECTED_ITEM_POSITION);
     }
-     */
+
 }

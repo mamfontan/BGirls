@@ -9,13 +9,10 @@
     <string name="connectionError">Error connecting the server</string>
 
     <!-- Gallery list activity -->
-    <string name="lblGalleryListName">Beauty Girls on pics</string>
+    <string name="lblGalleryListName">Beauty Girls</string>
     <string name="lblGalleryList">Galleries</string>
     <string name="title_activity_gallery_list">Gallery List</string>
     <string name="title_activity_about">About</string>
-    <string name="contentDescriptionShare">About</string>
-    <string name="contentDescriptionDownload">About</string>
-    <string name="contentDescriptionInformation">About</string>
     <string name="lblNoData">Server has not returned data</string>
     <string name="lblNumPics">Num. pics: </string>
 
@@ -23,11 +20,16 @@
     <string name="lblGalleryName">Gallery Name</string>
 
     <!-- Video list activity -->
-    <string name="lblVideoListName">Beauty Girls on video</string>
+    <string name="lblVideoListName">Beauty Girls</string>
     <string name="lblVideoList">Video List</string>
 
     <!-- About activity -->
     <string name="lblAboutTitle">About</string>
     <string name="btnBack">Back</string>
+
+    <!-- Menu texts -->
+    <string name="menuViewMoreRecent">Most recent</string>
+    <string name="menuViewMostVoted">Most voted</string>
+    <string name="menuAbout">About</string>
 
 </resources>
