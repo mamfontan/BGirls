@@ -97,6 +97,10 @@ public class GalleryListActivity extends AppCompatActivity implements PopupMenu.
                 order = "views";
                 GetGalleryList();
                 return true;
+            case R.id.menuViewBestRated:
+                order = "rating";
+                GetGalleryList();
+                return true;
             case R.id.menuAbout:
                 Intent i = new Intent(GalleryListActivity.this, AboutActivity.class);
                 startActivity(i);

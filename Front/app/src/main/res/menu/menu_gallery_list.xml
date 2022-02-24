@@ -7,6 +7,8 @@
         android:title="@string/menuViewMoreRecent"/>
     <item  android:id="@+id/menuViewMostVoted"
         android:title="@string/menuViewMostVoted"/>
+    <item  android:id="@+id/menuViewBestRated"
+        android:title="@string/menuViewBestRated"/>
     <item  android:id="@+id/menuAbout"
         android:title="@string/menuAbout"
         app:showAsAction="withText"/>

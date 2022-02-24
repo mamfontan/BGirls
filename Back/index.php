@@ -16,30 +16,29 @@
     <!-- local styles -->
     <link rel="stylesheet" type="text/css" href="index.css" media=”screen”>
     <meta name = "keywords" content = "HTML, Meta Tags, Metadata" />  
-    <title>Kind Girls</title>
+    <title>Beauty Girls</title>
 </head>
 <html>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 text-center">
-                    <div class="title">Kind Girls</div>
+                    <div class="title">Beauty Girls</div>
                 </div>
                 <div class="col-sm-12 col-md-12 text-center">
-                    This is a clean and honest site about beautiful nude girls. We hope you enjoy kindgirls.<br/>
+                    This is a clean and honest site about beautiful nude girls. We hope you enjoy Beauty Girls.<br/>
                     Do not forget to have a look at our free Photo Archive: 124766 photos in 9151 galleries, growing daily (or almost).
                 </div>                
             </div>
             <br/>
             <hr>
             <div class="row">
-                <div class="col-sm-3 col-md-3 text-center">Galleries: <?php echo countTableElements('galleries'); ?></div>
-                <div class="col-sm-3 col-md-3 text-center">Pics: <?php echo countTableElements('pics'); ?></div>
-                <div class="col-sm-3 col-md-3 text-center">Videos: <?php echo countTableElements('videos'); ?></div>
-                <div class="col-sm-3 col-md-3 text-center">Devices: <?php echo countTableElements('devices'); ?></div>
+                <div class="col-sm-4 col-md-4 text-center">Devices: <?php echo countTableElements('devices'); ?></div>
+                <div class="col-sm-4 col-md-4 text-center">Galleries: <?php echo countTableElements('galleries'); ?></div>
+                <div class="col-sm-4 col-md-4 text-center">Pics: <?php echo countTableElements('pics'); ?></div>
             </div>
             <div class="row" style="margin-top:25px">
-                <div class="col-sm-12 col-md-12 text-center">Download apk <a href="app-debug.zip">Beauty girls</a></div>
+                <div class="col-sm-12 col-md-12 text-center">Download application for android in <a href="app-debug.zip">this link</a></div>
             </div>
 
         </div>

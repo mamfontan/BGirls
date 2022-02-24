@@ -21,11 +21,14 @@
 
     <!-- About activity -->
     <string name="lblAboutTitle">About</string>
+    <string name="lblAboutAppTitle">About Beauty Girls</string>
+    <string name="lblAboutInfo">This is a clean and honest app about beautiful nude girls. We hope you enjoy Beauty Girls.</string>
     <string name="btnBack">Back</string>
 
     <!-- Menu texts -->
     <string name="menuViewMoreRecent">Most recent</string>
-    <string name="menuViewMostVoted">Most voted</string>
+    <string name="menuViewMostVoted">Most viewed</string>
+    <string name="menuViewBestRated">Best rated</string>
     <string name="menuAbout">About</string>
 
 </resources>
