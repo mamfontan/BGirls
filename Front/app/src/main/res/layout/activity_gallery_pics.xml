@@ -7,7 +7,7 @@
     android:background="@drawable/background02"
     tools:context=".GalleryPicsActivity">
 
-    <ImageView
+    <arousa.com.bgirls.controls.TouchImageView
         android:id="@+id/imageView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -15,11 +15,11 @@
         android:paddingEnd="5sp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/question"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/lblGalleryName"
@@ -60,5 +60,46 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnLeft"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/left" />
+
+    <ImageView
+        android:id="@+id/btnStar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/star" />
+
+    <ImageView
+        android:id="@+id/btnRight"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/right" />
+
+    <ImageView
+        android:id="@+id/btnDownload"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/download" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

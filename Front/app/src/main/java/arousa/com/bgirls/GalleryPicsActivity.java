@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +34,10 @@ public class GalleryPicsActivity extends AppCompatActivity {
     private ImageView _mainImageView;
     private TextView _galleryIndex;
     private TextView _loader;
+    private ImageView _left;
+    private ImageView _right;
+    private ImageView _star;
+    private ImageView _download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,10 @@ public class GalleryPicsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_pics);
 
-        _mainImageView = (ImageView) findViewById(R.id.imageView);
-        _loader = (TextView) findViewById(R.id.lblGalleryLoading);
-        _galleryIndex = (TextView) findViewById(R.id.lblGalleryIndex);
-
+        GetViewControls();
         LoadGalleryName();
 
+        HookButtonEvents();
         UpdateLoaderText(_loadedPics, _gallery.pics.size());
         ShowMainImage(false);
         ShowLoader(true);
@@ -66,14 +67,74 @@ public class GalleryPicsActivity extends AppCompatActivity {
         galleryName.setText(_gallery.name);
     }
 
+    private void GetViewControls()
+    {
+        _mainImageView = (ImageView) findViewById(R.id.imageView);
+        _loader = (TextView) findViewById(R.id.lblGalleryLoading);
+        _galleryIndex = (TextView) findViewById(R.id.lblGalleryIndex);
+        _left = (ImageView) findViewById(R.id.btnLeft);
+        _right = (ImageView) findViewById(R.id.btnRight);
+        _star = (ImageView) findViewById(R.id.btnStar);
+        _download = (ImageView) findViewById(R.id.btnDownload);
+    }
+
+    private void HookButtonEvents()
+    {
+        _left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (_actualPicIndex > 0) {
+                    _actualPicIndex = _actualPicIndex - 1;
+                } else {
+                    _actualPicIndex = _gallery.pics.size()-1;
+                }
+                SetMainImage();
+            }
+        });
+
+        _right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (_actualPicIndex < _gallery.pics.size()-1) {
+                    _actualPicIndex = _actualPicIndex + 1;
+                } else {
+                    _actualPicIndex = 0;
+                }
+                SetMainImage();
+            }
+        });
+
+        _star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO
+            }
+        });
+
+        _download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO
+            }
+        });
+    }
+
     private void ShowMainImage(boolean show)
     {
         if (show) {
             _mainImageView.setVisibility(View.VISIBLE);
             _galleryIndex.setVisibility(View.VISIBLE);
+            _left.setVisibility(View.VISIBLE);
+            _right.setVisibility(View.VISIBLE);
+            _star.setVisibility(View.VISIBLE);
+            _download.setVisibility(View.VISIBLE);
         } else {
             _mainImageView.setVisibility(View.INVISIBLE);
             _galleryIndex.setVisibility(View.INVISIBLE);
+            _left.setVisibility(View.INVISIBLE);
+            _right.setVisibility(View.INVISIBLE);
+            _star.setVisibility(View.INVISIBLE);
+            _download.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -143,45 +204,6 @@ public class GalleryPicsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        if (_loader.getVisibility() == View.VISIBLE)
-            return false;
-
-        switch(event.getAction())
-        {
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float deltaX = x2 - x1;
-
-                if (Math.abs(deltaX) > MIN_DISTANCE) {
-                    if (x2 > x1) {
-                        if (_actualPicIndex > 0) {
-                            _actualPicIndex = _actualPicIndex - 1;
-                        } else {
-                            _actualPicIndex = _gallery.pics.size()-1;
-                        }
-                    } else {
-                        if (_actualPicIndex < _gallery.pics.size()-1) {
-                            _actualPicIndex = _actualPicIndex + 1;
-                        } else {
-                            _actualPicIndex = 0;
-                        }
-                    }
-                    SetMainImage();
-                }
-                break;
-        }
-
-        return super.onTouchEvent(event);
-    }
-
-    @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
     }
@@ -190,5 +212,4 @@ public class GalleryPicsActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
-
 }
