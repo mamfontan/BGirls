@@ -1,18 +1,30 @@
 package arousa.com.bgirls;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static arousa.com.bgirls.Constants.WRITE_EXTERNAL_STORAGE_PERMISSION;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -20,16 +32,11 @@ import arousa.com.bgirls.model.Gallery;
 
 public class GalleryPicsActivity extends AppCompatActivity {
 
-    private final String SEPARATOR = " / ";
-
     private Gallery _gallery;
     private Integer _actualPicIndex = 0;
     private Integer _loadedPics = 0;
 
-    private ArrayList<Bitmap> _bitmaps = new ArrayList<Bitmap>();
-
-    private float x1,x2;
-    static final int MIN_DISTANCE = 150;
+    private ArrayList<Bitmap> _bitmaps = new ArrayList<>();
 
     private ImageView _mainImageView;
     private TextView _galleryIndex;
@@ -107,14 +114,14 @@ public class GalleryPicsActivity extends AppCompatActivity {
         _star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                // TODO Rating activity
             }
         });
 
         _download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                SaveImage();
             }
         });
     }
@@ -154,17 +161,17 @@ public class GalleryPicsActivity extends AppCompatActivity {
 
     private void UpdateLoaderText(Integer loadedPics, Integer numPics)
     {
-        _loader.setText(loadedPics + SEPARATOR +  numPics);
+        _loader.setText(loadedPics + Constants.SEPARATOR +  numPics);
     }
 
     private void SetGalleryIndex()
     {
-        _galleryIndex.setText((_actualPicIndex + 1) + SEPARATOR + _gallery.pics.size());
+        _galleryIndex.setText((_actualPicIndex + 1) + Constants.SEPARATOR + _gallery.pics.size());
     }
 
     private void LoadGalleryImages()
     {
-        for (Integer index = 0; index < _gallery.pics.size(); index++)
+        for (int index = 0; index < _gallery.pics.size(); index++)
             new DownloadImageFromInternet().execute(_gallery.pics.get(index));
     }
     
@@ -212,4 +219,79 @@ public class GalleryPicsActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
+
+    private void SaveImage()
+    {
+        if (ContextCompat.checkSelfPermission(GalleryPicsActivity.this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GalleryPicsActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_PERMISSION);
+        }
+
+        String message = "";
+        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "BeautyGirl";
+        File appDir = new File(storePath);
+        boolean albumCreated = true;
+        if (!appDir.exists()) {
+            albumCreated = appDir.mkdir();
+            if (!albumCreated)
+                message = "Error creating the gallery album";
+        }
+
+        if (albumCreated)
+        {
+            String fileName = _gallery.name +  " (" + (_actualPicIndex + 1) +  ").jpg";
+            File file = new File(appDir, fileName);
+            try {
+                file.createNewFile();
+                FileOutputStream fos = new FileOutputStream(file, true);
+                //Compress and save pictures by io stream
+                boolean isSuccess = _bitmaps.get(_actualPicIndex).compress(Bitmap.CompressFormat.JPEG, 60, fos);
+                fos.flush();
+                fos.close();
+
+                //Insert files into the system Gallery
+                //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+                //Update the database by sending broadcast notifications after saving pictures
+                Uri uri = Uri.fromFile(file);
+                getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                if (isSuccess) {
+                    message = "Picture saved successfully";
+                } else {
+                    message = "Error saving picture";
+                }
+            } catch (IOException e) {
+                message = e.getMessage();
+            }
+        }
+
+        Toast.makeText(GalleryPicsActivity.this, message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        /*
+        switch (requestCode) {
+
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+
+                    // boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if (cameraAccepted)
+                        Snackbar.make(view, "Permission Granted, Now you can access camera.", Snackbar.LENGTH_LONG).show();
+                    else {
+                        Snackbar.make(view, "Permission Denied, You cannot access camera.", Snackbar.LENGTH_LONG).show();
+                    }
+                }
+
+                break;
+        }
+
+         */
+    }
+
 }
