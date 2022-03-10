@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "9d5cbd4f-0e30-44e5-b393-afc009b4a294": {
+      "ProjectGuid": "9d5cbd4f-0e30-44e5-b393-afc009b4a294",
+      "DisplayName": "BG.Service",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

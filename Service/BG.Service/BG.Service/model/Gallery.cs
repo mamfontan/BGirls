@@ -17,5 +17,7 @@
         public float Rating { get; set; }
 
         public string[] Pics { get; set; }
+
+        public bool Saved { get; set; }
     }
 }

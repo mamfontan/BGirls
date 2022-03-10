@@ -5,3 +5,6 @@ Service/BG.Service/BG.Service/obj/Debug/BG.Service.csproj.AssemblyReference.cach
 Service/BG.Service/BG.Service/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 Service/BG.Service/BG.Service/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 Service/BG.Service/BG.Service/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs
+Service/BG.Service/BG.Service/bin/
+Service/BG.Service/BG.Service/obj
+
